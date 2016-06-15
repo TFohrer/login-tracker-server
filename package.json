@@ -1,0 +1,23 @@
+{
+  "name": "login-tracker-server",
+  "version": "1.0.0",
+  "description": "rest api for collecting data from login-tracker firefox extension",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TFohrer/login-tracker-server.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/TFohrer/login-tracker-server/issues"
+  },
+  "homepage": "https://github.com/TFohrer/login-tracker-server#readme",
+  "dependencies": {
+    "body-parser": "^1.15.1",
+    "express": "^4.13.4"
+  }
+}
