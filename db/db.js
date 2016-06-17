@@ -47,14 +47,12 @@ exports.getNewUser = function(req,res) {
     console.log('Adding user: ' + JSON.stringify(newUser));
 
     db.collection('user', function(err, collection) {
-
         collection.insert(newUser, {safe:true}, function(err, result) {
             if (err) {
                 res.send({'error':'An error has occurred'});
             } else {
                 console.log('Success: ' + JSON.stringify(result[0]));
-                res.send(result[0]);
-                console.log(result);
+                res.send({'userId' : result.insertedIds[0]});
             }
         });
     });

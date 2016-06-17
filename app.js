@@ -7,7 +7,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // init database connection and setup rest routes and functions
-var db     = require("./config/db.js"),
+var db     = require("./db/db.js"),
     routes = require("./routes/routes.js")(app,db);
 
 
