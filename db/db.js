@@ -65,7 +65,6 @@ exports.getNewUser = function(req,res) {
     });
 };
 
-
 /**
  * creates new login object
  * @param data
@@ -73,7 +72,7 @@ exports.getNewUser = function(req,res) {
 exports.createLogin = function(res,data){
     var newLogin = data;
 
-    db.collection("login", function(err,collection){
+    db.collection("logins", function(err,collection){
         collection.insert(newLogin,{safe:true}, function(err, result){
             if (err) {
                 res.send({'error':'An error has occurred'});
