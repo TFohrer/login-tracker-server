@@ -17,6 +17,13 @@ db.open(function(err, db) {
                 //populateDB();
             }
         });
+
+        db.collection('logins', {strict:true}, function(err, collection) {
+            if (err) {
+                console.log("The 'login' collection doesn't exist. Creating it ...");
+                //populateDB();
+            }
+        });
     }
     else{
         console.log(err);
@@ -43,7 +50,7 @@ exports.findAllUser = function(req,res){
  */
 exports.getNewUser = function(req,res) {
 
-    var newUser = { name: 'test'};
+    var newUser = {};
     console.log('Adding user: ' + JSON.stringify(newUser));
 
     db.collection('user', function(err, collection) {
@@ -53,6 +60,26 @@ exports.getNewUser = function(req,res) {
             } else {
                 console.log('Success: ' + JSON.stringify(result[0]));
                 res.send({'userId' : result.insertedIds[0]});
+            }
+        });
+    });
+};
+
+
+/**
+ * creates new login object
+ * @param data
+ */
+exports.createLogin = function(res,data){
+    var newLogin = data;
+
+    db.collection("login", function(err,collection){
+        collection.insert(newLogin,{safe:true}, function(err, result){
+            if (err) {
+                res.send({'error':'An error has occurred'});
+            } else {
+                console.log('Success: ' + JSON.stringify(result[0]));
+                res.send({'login id' : result.insertedIds[0]});
             }
         });
     });

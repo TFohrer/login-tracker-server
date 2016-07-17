@@ -1,9 +1,38 @@
 # login-tracker-server
 
+Node.js-Server for storing data coming from login-tracker Firefox extension.
+Used technologies/frameworks:
+
+* Node.js
+* Express (+ body-parser)
+* MongoDB
+
 # Install
-run "npm install"
-install mongodb
+
+Install npm:
+
+```
+    $ npm install
+```
+
+
+Install mongodb e.g. with brew:
+
+```
+    $ brew install mongodb
+```
+
 
 # Start
-start mongodb (run "mongod")
-run "node app.js"
+start mongodb
+
+```
+    $ mongod
+```
+
+ 
+start node app
+
+```
+    $ node app.js
+```

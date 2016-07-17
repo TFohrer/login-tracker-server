@@ -3,7 +3,9 @@ var express    = require("express"),
 
 var app = express();
 
+// support json encoded request bodies
 app.use(bodyParser.json());
+// support encoded request bodies
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // init database connection and setup rest routes and functions
