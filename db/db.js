@@ -1,3 +1,4 @@
+// TODO private || anonymous namespace
 
 var mongo = require('mongodb');
 
@@ -5,7 +6,11 @@ var Server = mongo.Server,
     Db = mongo.Db,
     BSON = mongo.BSONPure;
 
-var server = new Server('localhost', 27017, {auto_reconnect: true});
+var mongoDBHost = process.env.OPENSHIFT_MONGODB_DB_HOST || 'localhost',
+    mongoDBPort = process.env.OPENSHIFT_MONGODB_DB_PORT || 27017;
+
+
+var server = new Server(mongoDBHost, mongoDBPort, {auto_reconnect: true});
 db = new Db('login-tracker', server);
 
 db.open(function(err, db) {
