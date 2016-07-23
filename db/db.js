@@ -62,6 +62,7 @@ exports.getNewUser = function(req,res) {
         collection.insert(newUser, {safe:true}, function(err, result) {
             if (err) {
                 res.send({'error':'An error has occurred'});
+                res.send(err);
             } else {
                 console.log('Success: ' + JSON.stringify(result[0]));
                 res.send({'userId' : result.insertedIds[0]});
@@ -81,6 +82,7 @@ exports.createLogin = function(res,data){
         collection.insert(newLogin,{safe:true}, function(err, result){
             if (err) {
                 res.send({'error':'An error has occurred'});
+                res.send(err);
             } else {
                 console.log('Success: ' + JSON.stringify(result[0]));
                 res.send({'login id' : result.insertedIds[0]});
