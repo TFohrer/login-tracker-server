@@ -2,9 +2,9 @@
   "name": "login-tracker-server",
   "version": "1.0.0",
   "description": "rest api for collecting data from login-tracker firefox extension",
-  "main": "app.js",
+  "main": "server.js",
   "scripts": {
-    "start": "node app.js"
+    "start": "node server.js"
   },
   "repository": {
     "type": "git",

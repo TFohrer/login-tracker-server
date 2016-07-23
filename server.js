@@ -1,13 +1,13 @@
 #!/bin/env node
 //  OpenShift sample Node application
-var express = require('express');
-var fs      = require('fs');
-
+var express    = require('express'),
+    fs         = require('fs'),
+    bodyParser = require("body-parser");
 
 /**
  *  Define the sample application.
  */
-var SampleApp = function() {
+var loginTrackerServerApp = function() {
 
     //  Scope.
     var self = this;
@@ -89,36 +89,22 @@ var SampleApp = function() {
     /*  App server functions (main app logic here).                       */
     /*  ================================================================  */
 
-    /**
-     *  Create the routing table entries + handlers for the application.
-     */
-    self.createRoutes = function() {
-        self.routes = { };
-
-        self.routes['/asciimo'] = function(req, res) {
-            var link = "http://i.imgur.com/kmbjB.png";
-            res.send("<html><body><img src='" + link + "'></body></html>");
-        };
-
-        self.routes['/'] = function(req, res) {
-            res.setHeader('Content-Type', 'text/html');
-            res.send(self.cache_get('index.html') );
-        };
-    };
-
 
     /**
      *  Initialize the server (express) and create the routes and register
      *  the handlers.
      */
     self.initializeServer = function() {
-        self.createRoutes();
-        self.app = express.createServer();
+        var app = express();
+        self.app = app;
 
-        //  Add handlers for the app (from the routes).
-        for (var r in self.routes) {
-            self.app.get(r, self.routes[r]);
-        }
+        // support json encoded request bodies
+        app.use(bodyParser.json());
+        // support encoded request bodies
+        app.use(bodyParser.urlencoded({ extended: true }));
+
+        var db     = require("./db/db.js"),
+            routes = require("./routes/routes.js")(app,db);
     };
 
 
@@ -153,7 +139,7 @@ var SampleApp = function() {
 /**
  *  main():  Main code.
  */
-var zapp = new SampleApp();
-zapp.initialize();
-zapp.start();
+var ltsApp = new loginTrackerServerApp();
+ltsApp.initialize();
+ltsApp.start();
 
