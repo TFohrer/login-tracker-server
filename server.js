@@ -25,12 +25,24 @@ var loginTrackerServerApp = function() {
         self.ipaddress = process.env.OPENSHIFT_NODEJS_IP;
         self.port      = process.env.OPENSHIFT_NODEJS_PORT || 8080;
 
+        //set mongoDb variables
+        var mongoDBHost = process.env.OPENSHIFT_MONGODB_DB_HOST || 'localhost',
+            mongoDBPort = process.env.OPENSHIFT_MONGODB_DB_PORT || 27017,
+            mongoDBName = "login-tracker";
+
+        self.connectionString = "mongodb://" + mongoDBHost + ":" + mongoDBPort + "/" + mongoDBName;
+
+        // set authentication if running on server
+        if(process.env.OPENSHIFT_MONGODB_DB_PASSWORD){
+
+        }
+
         if (typeof self.ipaddress === "undefined") {
             //  Log errors on OpenShift but continue w/ 127.0.0.1 - this
             //  allows us to run/test the app locally.
             console.warn('No OPENSHIFT_NODEJS_IP var, using 127.0.0.1');
             self.ipaddress = "127.0.0.1";
-        };
+        }
     };
 
 
@@ -105,6 +117,17 @@ var loginTrackerServerApp = function() {
 
         var db     = require("./db/db.js"),
             routes = require("./routes/routes.js")(app,db);
+
+        // Connect to Mongo on start
+        db.connect(self.connectionString,function(err){
+            if (err){
+                console.log('Unable to connect to Mongo.');
+                process.exit();
+            }
+            else{
+                self.start();
+            }
+        })
     };
 
 
@@ -141,5 +164,5 @@ var loginTrackerServerApp = function() {
  */
 var ltsApp = new loginTrackerServerApp();
 ltsApp.initialize();
-ltsApp.start();
+//ltsApp.start();
 

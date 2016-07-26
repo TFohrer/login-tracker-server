@@ -2,20 +2,25 @@
 
 var mongo = require('mongodb');
 
-var Server = mongo.Server,
-    Db = mongo.Db,
-    BSON = mongo.BSONPure;
+var Server      = mongo.Server,
+    Db          = mongo.Db,
+    BSON        = mongo.BSONPure,
+    MongoClient = mongo.MongoClient,
+    state       = {db:null};
 
-var mongoDBHost = process.env.OPENSHIFT_MONGODB_DB_HOST || 'localhost',
-    mongoDBPort = process.env.OPENSHIFT_MONGODB_DB_PORT || 27017;
+exports.connect = function(url, done) {
+    //already connected to db
+    if (state.db){
+        return done();
+    }
 
+    MongoClient.connect(url, function(err, db) {
+        if (err){
+            return done(err);
+        }
 
-var server = new Server(mongoDBHost, mongoDBPort, {auto_reconnect: true});
-db = new Db('login-tracker', server);
+        state.db = db;
 
-db.open(function(err, db) {
-    if(!err) {
-        console.log("Connected to 'login-tracker' database");
         db.collection('user', {strict:true}, function(err, collection) {
             if (err) {
                 console.log("The 'user' collection doesn't exist. Creating it ...");
@@ -29,67 +34,21 @@ db.open(function(err, db) {
                 //populateDB();
             }
         });
+
+        done()
+    })
+};
+
+exports.get = function() {
+    return state.db
+};
+
+exports.close = function(done) {
+    if (state.db) {
+        state.db.close(function(err, result) {
+            state.db = null
+            state.mode = null
+            done(err)
+        })
     }
-    else{
-        console.log(err);
-    }
-});
-
-/**
- * get all users
- * @param req
- * @param res
- */
-exports.findAllUser = function(req,res){
-    db.collection('user', function(err, collection) {
-        collection.find().toArray(function(err, items) {
-            res.send(items);
-        });
-    });
 };
-
-/**
- * creates a new user object and returns user id to save in extension
- * @param req
- * @param res
- */
-exports.getNewUser = function(req,res) {
-
-    var newUser = {};
-    console.log('Adding user: ' + JSON.stringify(newUser));
-
-    db.collection('user', function(err, collection) {
-        collection.insert(newUser, {safe:true}, function(err, result) {
-            if (err) {
-                res.send({'error':'An error has occurred'});
-                res.send(err);
-            } else {
-                console.log('Success: ' + JSON.stringify(result[0]));
-                res.send({'userId' : result.insertedIds[0]});
-            }
-        });
-    });
-};
-
-/**
- * creates new login object
- * @param data
- */
-exports.createLogin = function(res,data){
-    var newLogin = data;
-
-    db.collection("logins", function(err,collection){
-        collection.insert(newLogin,{safe:true}, function(err, result){
-            if (err) {
-                res.send({'error':'An error has occurred'});
-                res.send(err);
-            } else {
-                console.log('Success: ' + JSON.stringify(result[0]));
-                res.send({'login id' : result.insertedIds[0]});
-            }
-        });
-    });
-};
-
-
-
