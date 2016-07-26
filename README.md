@@ -36,3 +36,12 @@ start node app
 ```
     $ node app.js
 ```
+
+
+# Deploy to openshift
+
+- create remote branch
+- commit and push to branch via 
+```
+    git push <remote branch name> origin
+```
