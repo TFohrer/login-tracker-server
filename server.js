@@ -34,7 +34,7 @@ var loginTrackerServerApp = function() {
 
         // set authentication if running on server
         if(process.env.OPENSHIFT_MONGODB_DB_PASSWORD){
-            self.connectionString = process.env.OPENSHIFT_MONGODB_DB_USERNAME + ":" +
+            self.connectionString = "mongodb://" + process.env.OPENSHIFT_MONGODB_DB_USERNAME + ":" +
                 process.env.OPENSHIFT_MONGODB_DB_PASSWORD + "@" +
                 process.env.OPENSHIFT_MONGODB_DB_HOST + ':' +
                 process.env.OPENSHIFT_MONGODB_DB_PORT + '/' +
