@@ -7,6 +7,8 @@ Used technologies/frameworks:
 * Express (+ body-parser)
 * MongoDB
 
+Server is currently hosted on [openshift](https://www.openshift.com/)
+
 # Install
 
 Install npm:
