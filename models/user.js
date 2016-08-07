@@ -37,3 +37,25 @@ exports.getNew = function(req,res) {
         }
     });
 };
+
+/**
+ * check if user filled form
+ * @param req
+ * @param res
+ */
+exports.filledForm = function(req,res){
+
+    var userObjectId = db.idToObjectId(req.params.userId);
+
+    db.get().collection(collectionName).findOne({_id:userObjectId},function(err,user){
+        if(user){
+
+            var filledForm = user.survey != undefined;
+            res.send(filledForm);
+        }
+        else{
+            res.sendStatus(500);
+            res.send('no user found for id :' + req.params.userId);
+        }
+    });
+};

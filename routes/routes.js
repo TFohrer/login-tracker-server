@@ -5,11 +5,12 @@ var appRouter = function(app,db) {
         Logins = require('../models/logins');
 
     app.get("/", function(req, res) {
-        res.send("Hello World");
+        res.send("Login Tracker Server");
     });
     // User
     app.get("/user/findAll", User.findAll);
     app.get("/user/getNew", User.getNew);
+    app.get("/user/:userId/formFilled",User.filledForm);
 
     //Login
     app.post("/logins",function(req,res){

@@ -6,7 +6,8 @@ var Server      = mongo.Server,
     Db          = mongo.Db,
     BSON        = mongo.BSONPure,
     MongoClient = mongo.MongoClient,
-    state       = {db:null};
+    state       = {db:null},
+    ObjectId    = require('mongodb').ObjectID;
 
 exports.connect = function(url, done) {
     //already connected to db
@@ -41,6 +42,10 @@ exports.connect = function(url, done) {
 
 exports.get = function() {
     return state.db
+};
+
+exports.idToObjectId = function(id){
+    return new ObjectId(id);
 };
 
 exports.close = function(done) {

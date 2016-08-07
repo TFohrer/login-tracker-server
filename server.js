@@ -12,7 +12,6 @@ var loginTrackerServerApp = function() {
     //  Scope.
     var self = this;
 
-
     /*  ================================================================  */
     /*  Helper functions.                                                 */
     /*  ================================================================  */
@@ -136,7 +135,7 @@ var loginTrackerServerApp = function() {
 
 
     /**
-     *  Initializes the sample application.
+     *  Initializes the server
      */
     self.initialize = function() {
         self.setupVariables();
@@ -149,7 +148,7 @@ var loginTrackerServerApp = function() {
 
 
     /**
-     *  Start the server (starts up the sample application).
+     *  Start the server
      */
     self.start = function() {
         //  Start the app on the specific interface (and port).
@@ -159,8 +158,7 @@ var loginTrackerServerApp = function() {
         });
     };
 
-};   /*  Sample Application.  */
-
+};
 
 
 /**
@@ -168,5 +166,4 @@ var loginTrackerServerApp = function() {
  */
 var ltsApp = new loginTrackerServerApp();
 ltsApp.initialize();
-//ltsApp.start();
 
