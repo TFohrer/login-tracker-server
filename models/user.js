@@ -72,7 +72,7 @@ exports.submitForm = function(req,res){
     delete req.body.userId;
 
     if(userId){
-        db.get().collection(collectionName).update({_id:userObjectId},{
+        db.get().collection(collectionName).update({_id:userId},{
             survey: req.body
         });
 
