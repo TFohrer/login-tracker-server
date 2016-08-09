@@ -76,7 +76,7 @@ exports.submitForm = function(req,res){
 
         db.get().collection(collectionName).update({_id:userObjectId},{
             survey: req.body
-        },{test:'test'});
+        });
 
     }
 
