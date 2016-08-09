@@ -68,6 +68,15 @@ exports.filledForm = function(req,res){
 exports.submitForm = function(req,res){
     console.log(JSON.stringify(req.body));
     var userId = req.body.userId;
+
+    delete req.body.userId;
+
+    if(userId){
+        db.get().collection(collectionName).update({_id:userObjectId},{
+            survey: req.body
+        });
+
+    }
     console.log(userId);
     res.send(req.body);
 };
