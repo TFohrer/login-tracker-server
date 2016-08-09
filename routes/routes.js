@@ -11,6 +11,7 @@ var appRouter = function(app,db) {
     app.get("/user/findAll", User.findAll);
     app.get("/user/getNew", User.getNew);
     app.get("/user/:userId/formFilled",User.filledForm);
+    app.post("/user/formSubmit",User.submitForm);
 
     //Login
     app.post("/logins",function(req,res){

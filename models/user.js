@@ -59,3 +59,15 @@ exports.filledForm = function(req,res){
         }
     });
 };
+
+/**
+ *
+ * @param req
+ * @param res
+ */
+exports.submitForm = function(req,res){
+    console.log(JSON.stringify(req.body));
+    var userId = req.body.userId;
+    console.log(userId);
+    res.send(req.body);
+};
