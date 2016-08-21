@@ -1,8 +1,9 @@
 
 var appRouter = function(app,db) {
 
-    var User   = require('../models/user'),
-        Logins = require('../models/logins');
+    var User        = require('../models/user'),
+        Logins      = require('../models/logins'),
+        Application = require('../models/application');
 
     app.get("/", function(req, res) {
         res.send("Login Tracker Server");
@@ -19,6 +20,8 @@ var appRouter = function(app,db) {
     });
     app.get("/logins/findAll", Logins.findAll);
 
+    //Application
+    app.get("/application/getStatus", Application.getStatus);
 
 };
 

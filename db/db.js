@@ -36,6 +36,18 @@ exports.connect = function(url, done) {
             }
         });
 
+        db.collection('application', {strict:true}, function(err, collection){
+            if (err) {
+                console.log("The 'application' collection doesn't exist. Creating it ...");
+
+                var appSettings = {
+                    'active' : true
+                };
+
+                db.collection('application').insert(appSettings, {safe:true}, function(err, res) {});
+            }
+        });
+
         done()
     })
 };
@@ -51,8 +63,8 @@ exports.idToObjectId = function(id){
 exports.close = function(done) {
     if (state.db) {
         state.db.close(function(err, result) {
-            state.db = null
-            state.mode = null
+            state.db = null;
+            state.mode = null;
             done(err)
         })
     }
